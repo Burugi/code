@@ -54,22 +54,56 @@ python run_training.py \
 
 - Trained results are saved under `training_results/`.
 
-### 3. Visualization
 
-```bash
-python run_visualization.py \
-  --file_name Milano.csv \
-  --models dlinear tcn transformer \
-  --modes CD CI \
-  --target_feature OT
-```
+## 📎 Appendix: Hyperparameter Search Spaces
 
-- Visual results are saved in `visualizations/`.
-- Visualizes:
-  - Training history
-  - Feature-wise metrics
-  - Model performance comparisons
-  - CD vs CI prediction differences
+This section outlines the comprehensive hyperparameter search ranges used for each of the 15 models evaluated in this study. The ranges were derived from preliminary experiments and prior literature to ensure fair and consistent comparison across all models.
+
+### 🔧 Categories of Hyperparameters
+
+- **Common Parameters**: Learning rate, batch size, dropout rate, number of epochs  
+- **Architecture-Specific Parameters**:  
+  - Hidden dimensions, number of layers, attention heads (for Transformers), kernel sizes (for CNNs)  
+- **Optimization Settings**: Optimizer type, weight decay, learning rate scheduling  
+- **Model-Specific Hyperparameters**:  
+  - ProbSparse attention (Informer), decomposition settings (Autoformer), and more
+
+### 📐 Hyperparameter Search Ranges
+
+| Hyperparameter          | Search Range                      |
+|-------------------------|------------------------------------|
+| `learning_rate`         | [0.0001, 0.01]                     |
+| `batch_size`            | [32, 64, 128, 256]                |
+| `dropout`               | [0.1, 0.5]                         |
+| `weight_decay`          | [0.000001, 0.01]                   |
+| `d_model`               | [64, 128, 256, 512]                |
+| `n_heads`               | [4, 8, 16]                         |
+| `e_layers`, `d_layers`  | [1, 2, 3, 4]                       |
+| `d_ff`                  | [128, 256, 512, 1024]              |
+| `moving_avg`            | [13, 25, 37]                       |
+| `factor`                | [1, 2, 3, 4, 5]                    |
+| `embed`                 | `{fixed, timeF}`                   |
+| `activation`            | `{relu, gelu}`                     |
+| `kernel_size`           | [3, 45] (varies by model)          |
+| `conv_kernel`           | {[12,16], [8,12], [16,24]}         |
+| `window_size`           | {[2,2], [4,4], [8,4]}              |
+| `inner_size`            | [3, 7]                             |
+| `hidden_size`           | [64, 128, 256, 512]                |
+| `num_layers`            | [1, 2, 3, 4]                       |
+| `label_len`             | [0, 48]                            |
+| `distil`                | `{true, false}`                    |
+| `chunk_size`            | [4, 36]                            |
+| `rnn_type`              | `{LSTM, GRU}`                      |
+| `levels`                | [2, 4]                             |
+| `stacks`                | [1, 2]                             |
+| `seg_len`               | [6, 12, 24]                        |
+| `feature_encode_dim`    | [2, 8]                             |
+| `down_sampling_layers` | [1, 3]                             |
+| `down_sampling_window` | [2, 4]                             |
+| `decomp_method`         | `{moving_avg, dft}`                |
+| `top_k`                 | [1, 7]                             |
+| `num_kernels`           | [4, 8]                             |
+
 
 ## 📊 Included Models
 
